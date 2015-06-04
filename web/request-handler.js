@@ -32,8 +32,10 @@ exports.handleRequest = function (req, res) {
         res.writeHead(302);
 
         archive.isURLArchived(url, function() {
-         // if the url is in our list, serve page from the archive
-          res.end(url);
+          // if the url is in our list, serve page from the archive
+          fs.readFile(archive.paths.archivedSites + '/' + url, function(error, data) {
+            res.end(data);
+          });
 
         }, function() {
          // else add to the list, serve the loading page

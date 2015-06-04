@@ -29,8 +29,6 @@ exports.readListOfUrls = function(callback){
   var urls;
 
   fs.readFile(this.paths.list, 'utf8', function(error, data) {
-    // TODO: error handling
-
     urls = data.split('\n');
     callback(urls);
   });
@@ -46,13 +44,18 @@ exports.addUrlToList = function(url){
 };
 
 exports.isURLArchived = function(url, callback1, callback2) {
-
+  console.log('checking if ' + this.paths.archivedSites + '/' + url + ' exists');
   fs.exists(this.paths.archivedSites + '/' + url, function(exists) {
-    if( exists ) callback1();
-    else callback2();
+    if( exists ) {
+      console.log(url + ' is archived');
+      callback1(url);
+    } else {
+      console.log(url + ' is NOT archived');
+      callback2(url);
+    }
   });
 
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(url, callback){
 };
