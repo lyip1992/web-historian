@@ -25,16 +25,33 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
+exports.readListOfUrls = function(callback){
+  var urls;
+
+  fs.readFile(this.paths.list, 'utf8', function(error, data) {
+    // TODO: error handling
+
+    urls = data.split('\n');
+    callback(urls);
+  });
+
 };
 
-exports.isUrlInList = function(){
+exports.isUrlInList = function(url){ // todo
+
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(url){
+  fs.appendFile(this.paths.list, url + '\n');
 };
 
-exports.isURLArchived = function(){
+exports.isURLArchived = function(url, callback1, callback2) {
+
+  fs.exists(this.paths.archivedSites + '/' + url, function(exists) {
+    if( exists ) callback1();
+    else callback2();
+  });
+
 };
 
 exports.downloadUrls = function(){
